@@ -1,0 +1,75 @@
+CREATE DATABASE ElFaro;
+USE ElFaro;
+
+-- Tabla Usuario
+CREATE TABLE Usuario (
+    ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Apellido VARCHAR(100) NOT NULL,
+    Email VARCHAR(150) NOT NULL UNIQUE,
+    Contrasena VARCHAR(255) NOT NULL
+);
+
+-- Tabla Categoria
+CREATE TABLE Categoria (
+    ID_Categoria INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL
+);
+
+-- Tabla Articulos
+CREATE TABLE Articulos (
+    ID_Articulo INT AUTO_INCREMENT PRIMARY KEY,
+    Titulo VARCHAR(255) NOT NULL,
+    Descripcion TEXT NOT NULL,
+    ID_Usuario INT NOT NULL,
+    ID_Categoria INT NOT NULL,
+
+    FOREIGN KEY (ID_Usuario)
+        REFERENCES Usuario(ID_Usuario),
+
+    FOREIGN KEY (ID_Categoria)
+        REFERENCES Categoria(ID_Categoria)
+);
+
+-- Tabla Contacto
+CREATE TABLE Contacto (
+    ID_Contacto INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Mensaje TEXT NOT NULL,
+    Fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+INSERT INTO Categoria (Nombre)
+VALUES
+('Noticias generales'),
+('Deportes'),
+('Negocios');
+
+INSERT INTO Usuario (Nombre, Apellido, Email, Contrasena)
+VALUES
+('Administrador', 'El Faro', 'admin@elfaro.cl', '123456'),
+('Juan', 'Pérez', 'juan@elfaro.cl', '123456');
+
+INSERT INTO Articulos
+(Titulo, Descripcion, ID_Usuario, ID_Categoria)
+VALUES
+(
+'Conductor evita encerrona en Quinta Normal',
+'Un conductor realizó una maniobra arriesgada para evitar un robo.',
+1,
+1
+),
+(
+'Colo Colo gana de visita',
+'Importante triunfo en condición de visitante.',
+1,
+2
+),
+(
+'Banco Central mantiene tasa',
+'La autoridad decidió mantener la tasa de interés.',
+1,
+3
+);
